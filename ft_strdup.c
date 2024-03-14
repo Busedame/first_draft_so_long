@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 14:23:03 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:33:18 by nholbroo         ###   ########.fr       */
+/*   Created: 2023/11/16 15:41:16 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/03/14 17:39:38 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-# include <stdlib.h>
-# include <unistd.h>
-# include <stddef.h>
-# include "../ft_printf.h"
+#include "so_long.h"
 
-char	*get_next_line(int fd);
+char	*ft_strdup(const char *s)
+{
+	char		*dup;
+	int			i;
+	size_t		len;
 
-char	*ft_strjoin(char *s1, char *s2);
-
-int		ft_strchr_index(const char *s, int c);
-
-void	*ft_free(void *ptr);
-
-#endif
+	i = 0;
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	dup = (char *)malloc(len + 1);
+	if (dup == NULL)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
+}

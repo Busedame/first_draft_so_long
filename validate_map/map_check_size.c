@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map_size.c                                   :+:      :+:    :+:   */
+/*   map_check_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:26:14 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/12 20:02:06 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:23:59 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 static char	*init_count_each_line(char *line, int map)
 {
@@ -39,7 +39,7 @@ static char	*line_iteration(char *line, int map)
 	return (line);
 }
 
-static int	check_curr_count(char *line, int count)
+static int	check_curr_count(char *line)
 {
 	int	curr_count;
 
@@ -51,25 +51,13 @@ static int	check_curr_count(char *line, int count)
 	return (curr_count);
 }
 
-int	finish_read(int map)
-{
-	char	*line;
-
-	line = get_next_line(map);
-	while (line)
-	{
-		free(line);
-		line = get_next_line(map);
-	}
-	return (-1);
-}
-
 int	count_each_line(int map)
 {
 	int		count;
 	int		curr_count;
 	char	*line;
 
+	line = NULL;
 	line = init_count_each_line(line, map);
 	if (!line)
 		return (-1);
@@ -80,7 +68,7 @@ int	count_each_line(int map)
 		line = line_iteration(line, map);
 		if (!line)
 			return (-1);
-		curr_count = check_curr_count(line, count);
+		curr_count = check_curr_count(line);
 		if (curr_count != count || ft_strchr_index(line, '\n') == -1)
 			break ;
 	}

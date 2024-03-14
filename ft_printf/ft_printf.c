@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 16:53:00 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/12 17:59:42 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:01:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,3 @@ int	ft_printf(const char *txt, ...)
 	va_end(argv);
 	return (count);
 }
-
-

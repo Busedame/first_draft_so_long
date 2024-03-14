@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:23:12 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/12 18:00:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:33:08 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,3 @@ int	ft_strchr_index(const char *s, int c)
 		return (-1);
 	return (i);
 }
-
-// size_t	ft_strlen(const char *s)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	if (!s)
-// 		return (0);
-// 	while (s[i] != '\0')
-// 		i++;
-// 	return (i);
-// }
