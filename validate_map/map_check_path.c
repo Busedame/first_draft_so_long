@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:50 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:49:13 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:46:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,27 @@
 static int	parse_line_for_collectibles(t_path *path, char *line)
 {
 	int	i;
+	int	collectibles;
 
 	i = 0;
-	path->tot_collect = 0;
+	collectibles = 0;
 	while (line[i] != '\0')
 	{
 		if (line[i] == 'C')
-			path->tot_collect++;
+			collectibles++;
 		i++;
 	}
-	return (path->tot_collect);
+	return (collectibles);
 }
 
-static int	count_collectibles(t_path *path, int map)
+static void	count_collectibles(t_path *path, int map)
 {
 	char	*line;
 
 	line = get_next_line(map);
 	if (!line)
-		return (-1);
-	parse_line_for_collectibles(path, line);
+		path->tot_collect = -1;
+	path->tot_collect = parse_line_for_collectibles(path, line);
 	path->nl_count = 1;
 	while (line)
 	{
@@ -50,7 +51,6 @@ static int	count_collectibles(t_path *path, int map)
 	}
 	if (line)
 		free(line);
-	return (path->tot_collect);
 }
 
 static int	init_map_array(t_path *path, int map)
@@ -80,11 +80,22 @@ static int	init_map_array(t_path *path, int map)
 			return (-1);
 		y++;
 	}
+	if (line)
+		free(line);
 	path->map_array[++y] = NULL;
-	y = 0;
-	while (path->map_array[y])
-		ft_printf("%s", path->map_array[y++]);
 	return (0);
+}
+
+t_path	*init_path(t_path *path)
+{
+	path = malloc(sizeof(t_path));
+	if (!path)
+		map_path_errors(2, path);
+	path->map_array = NULL;
+	path->curr_collect = 0;
+	path->nl_count = 0;
+	path->tot_collect = 0;
+	return (path);
 }
 
 void	check_map_path(char *argv[])
@@ -92,13 +103,12 @@ void	check_map_path(char *argv[])
 	int		map;
 	t_path	*path;
 
-	path = malloc(sizeof(t_path));
-	if (!path)
-		map_path_errors(2, path);
+	path = NULL;
+	path = init_path(path);
 	map = open(argv[1], O_RDONLY);
 	if (map == -1)
 		map_path_errors(1, path);
-	path->tot_collect = count_collectibles(path, map);
+	count_collectibles(path, map);
 	if (path->tot_collect == -1)
 		map_path_errors(2, path);
 	if (close(map) == -1)
