@@ -6,11 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:23:32 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:10:52 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:37:13 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../../so_long.h"
 
 static int	check_first_or_last_line(char *line)
 {

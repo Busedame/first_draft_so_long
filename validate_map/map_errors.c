@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:28:15 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:26:26 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:42:27 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void	map_path_errors(int error_code, t_path *path)
 		perror("Error\nFailed to open map-file");
 	if (error_code == 2)
 		perror("Error\nMemory allocation failed");
+	if (error_code == 3)
+		perror("Error\nFailed to close map-file");
+	if (error_code == 4)
+	{
+		errno = EINVAL;
+		perror("Error\nNo valid path");
+	}
 	if (path)
 		free_path(path);
 	exit(1);

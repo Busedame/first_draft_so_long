@@ -6,11 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:57:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:10:25 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:37:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../../so_long.h"
 
 void	check_exit(char	*line, t_count *counter)
 {

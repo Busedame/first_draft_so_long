@@ -6,11 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:24 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:11:01 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:37:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../../so_long.h"
 
 int	finish_read(int map)
 {

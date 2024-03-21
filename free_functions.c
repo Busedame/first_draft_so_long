@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:28:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:33:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:18:38 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ void	free_path(t_path *path)
 {
 	if (path)
 	{
-		if (path->map_array)
-			ft_freearray(path->map_array);
+		if (path->original_map)
+			ft_freearray(path->original_map);
+		if (path->flood_map)
+			ft_freearray(path->flood_map);
 		free(path);
 	}
 }

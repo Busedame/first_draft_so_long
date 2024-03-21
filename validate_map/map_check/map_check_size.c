@@ -6,11 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:26:14 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 16:23:59 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:37:15 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../../so_long.h"
 
 static char	*init_count_each_line(char *line, int map)
 {

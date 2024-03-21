@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:51:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:40:02 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:50:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <errno.h>
+# include <stdbool.h>
 
 typedef struct s_count
 {
@@ -33,10 +34,14 @@ typedef struct s_count
 
 typedef struct s_path
 {
-	int		tot_collect;
-	int		curr_collect;
 	int		nl_count;
-	char	**map_array;
+	char	**original_map;
+	char	**flood_map;
+	bool	player_found;
+	int		x;
+	int		y;
+	int		max_x;
+	int		max_y;
 }	t_path;
 
 typedef struct s_game
@@ -54,7 +59,7 @@ void	free_all(t_game *so_long);
 int		ft_freearray(char **arr);
 void	free_path(t_path *path);
 
-// Map validation
+// Map validation -> Check file type, valid characters, size etc.
 void	check_map(char *argv[]);
 int		finish_read(int map);
 int		check_file_type(char *map_filename);
@@ -65,7 +70,19 @@ int		check_walls(char *line);
 void	check_collectibles(char	*line, t_count *counter);
 void	check_position(char	*line, t_count *counter);
 void	check_exit(char	*line, t_count *counter);
+
+// Map validation -> Check if there is a valid path to reach all collectibles
+// and also the exit.
 void	check_map_path(char *argv[]);
+t_path	*init_path(t_path *path);
+int		init_original_map(t_path *path, int map);
+char	**map_copy(t_path *path);
+int		find_max_y(char **flood_map);
+void	line_count(t_path *path, int map);
+int		find_valid_path(t_path *path);
+void	set_player_start_coordinates(t_path *path);
+int		check_flood_map(char **flood_map, char **original_map);
+char	**fill_flood_map(t_path *path, char **flood_map, int x, int y);
 
 // Errors
 void	map_errors(int error_code, t_count *counter);
