@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:51:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/21 18:50:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:07:21 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@
 # include <stddef.h>
 # include <errno.h>
 # include <stdbool.h>
+# include "minilibx-linux/mlx.h"
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
 
 typedef struct s_count
 {
