@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:51:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/22 15:07:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:25:33 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include <errno.h>
 # include <stdbool.h>
 # include "minilibx-linux/mlx.h"
+
+# define KEY_ESC 65307
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
 
 typedef struct s_data
 {
@@ -55,12 +61,25 @@ typedef struct s_path
 	int		max_y;
 }	t_path;
 
+typedef struct s_img
+{
+	char	*me;
+	char	*wall;
+	char	*shop;
+	char	*food;
+	char	*bed;
+}	t_img;
+
 typedef struct s_game
 {
-	int	count_e;
-	int	count_p;
-	int	count_c;
-	int	line_count;
+	void	*mlx;
+	void	*mlx_win;
+	int		p_x;
+	int		p_y;
+	int		x;
+	int		y;
+	t_path	*path;
+	t_img	*imgs;
 }	t_game;
 
 char	*ft_strdup(const char *s);
@@ -68,7 +87,9 @@ char	*ft_strdup(const char *s);
 // Free-functions
 void	free_all(t_game *so_long);
 int		ft_freearray(char **arr);
+void	free_imgs(t_img *imgs);
 void	free_path(t_path *path);
+void	free_floodmap(t_path *path);
 
 // Map validation -> Check file type, valid characters, size etc.
 void	check_map(char *argv[]);
@@ -84,7 +105,7 @@ void	check_exit(char	*line, t_count *counter);
 
 // Map validation -> Check if there is a valid path to reach all collectibles
 // and also the exit.
-void	check_map_path(char *argv[]);
+t_path	*check_map_path(char *argv[]);
 t_path	*init_path(t_path *path);
 int		init_original_map(t_path *path, int map);
 char	**map_copy(t_path *path);
@@ -98,5 +119,6 @@ char	**fill_flood_map(t_path *path, char **flood_map, int x, int y);
 // Errors
 void	map_errors(int error_code, t_count *counter);
 void	map_path_errors(int error_code, t_path *path);
+void	init_window_errors(int error_code, t_path **path, t_img **imgs);
 
 #endif

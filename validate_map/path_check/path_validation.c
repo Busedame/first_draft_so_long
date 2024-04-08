@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:50 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/03/21 19:03:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:32:49 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	find_valid_path(t_path *path)
 	return (0);
 }
 
-void	check_map_path(char *argv[])
+t_path	*check_map_path(char *argv[])
 {
 	int		map;
 	t_path	*path;
@@ -129,5 +129,6 @@ void	check_map_path(char *argv[])
 		map_path_errors(3, path);
 	if (find_valid_path(path) == -1)
 		map_path_errors(4, path);
-	free_path(path);
+	free_floodmap(path);
+	return (path);
 }
