@@ -6,12 +6,17 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:51:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/08 16:25:33 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:28:33 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
+# define KEY_ESC 65307
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
 # include "ft_printf.h"
 # include "get_next_line/get_next_line.h"
 # include <unistd.h>
@@ -24,12 +29,6 @@
 # include <errno.h>
 # include <stdbool.h>
 # include "minilibx-linux/mlx.h"
-
-# define KEY_ESC 65307
-# define KEY_UP 65362
-# define KEY_DOWN 65364
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
 
 typedef struct s_data
 {
@@ -68,6 +67,7 @@ typedef struct s_img
 	char	*shop;
 	char	*food;
 	char	*bed;
+	char	*back;
 }	t_img;
 
 typedef struct s_game
@@ -120,5 +120,16 @@ char	**fill_flood_map(t_path *path, char **flood_map, int x, int y);
 void	map_errors(int error_code, t_count *counter);
 void	map_path_errors(int error_code, t_path *path);
 void	init_window_errors(int error_code, t_path **path, t_img **imgs);
+
+// Game
+int		key_hook(int keycode, t_game *sl);
+void	init_images(t_img **imgs, t_path **path);
+void	set_images(t_img **imgs, t_path **path);
+void	init_struct(t_game *sl, t_path *path);
+void	init_map_in_window(t_img *imgs, t_path *path, void *mlx, void *mlx_win);
+int		count_array_length(t_path *path);
+void	move_player(t_game *sl, int dir);
+void	find_player(t_game *sl, t_path *path);
+void	is_finished(t_game *sl);
 
 #endif
