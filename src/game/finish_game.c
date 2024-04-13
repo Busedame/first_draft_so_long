@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:58:48 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:12:08 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/13 19:00:03 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,22 @@ int	check_finish_collectibles(t_game *sl)
 	return (1);
 }
 
+void	you_won_end_img(t_game *sl)
+{
+	void	*img;
+	int		size;
+	int		plc_x;
+	int		plc_y;
+
+	size = 130;
+	plc_x = ft_strlen(sl->path->original_map[0]);
+	plc_y = count_array_length(sl->path);
+	{
+		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
+		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, plc_x, plc_y);
+	}
+}
+
 void	is_finished(t_game *sl)
 {
 	int		x;
@@ -87,6 +103,7 @@ void	is_finished(t_game *sl)
 	if (sl->path->original_map[sl->y][sl->x] == 'E' &&
 		check_finish_collectibles(sl))
 	{
+		you_won_end_img(sl);
 		ft_printf("You won!!\n");
 		mlx_destroy_display(sl->mlx);
 		mlx_destroy_window(sl->mlx, sl->mlx_win);

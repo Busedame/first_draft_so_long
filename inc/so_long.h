@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:51:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:12:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/13 18:54:33 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_img
 	char	*bed;
 	char	*back;
 	char	*exit;
+	char	*win;
 }	t_img;
 
 typedef struct s_game

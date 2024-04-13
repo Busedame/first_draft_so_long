@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:23:01 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:25:38 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/13 19:09:46 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	init_map_in_window(t_game *sl, void *mlx, void *mlx_win)
 		{
 			if (sl->path->original_map[y][x] == '1')
 			{
-				img = mlx_xpm_file_to_image(mlx, sl->imgs->shop, &size, &size);
+				img = mlx_xpm_file_to_image(mlx, sl->imgs->wall, &size, &size);
 				mlx_put_image_to_window(mlx, mlx_win, img, plc_x, plc_y);
 			}
 			else if (sl->path->original_map[y][x] == 'P')
