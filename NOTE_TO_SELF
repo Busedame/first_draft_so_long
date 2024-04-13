@@ -1,0 +1,13 @@
+To do:
+
+Fix consecutive newlines in the end of the map-file:
+		--> Look into map_check_size.c, count_each_line-function.
+
+Fix memory leaks -> Really look into where you allocate for the struct, and
+the structs within the structs.
+
+There are several bugs when opening different maps, like being able to exit
+before all collectibles are collected, wrong start position, and some weird
+stuff happening.
+
+Make a Makefile.
