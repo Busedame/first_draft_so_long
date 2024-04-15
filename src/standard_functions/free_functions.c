@@ -6,25 +6,24 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:28:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:09:01 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:37:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/so_long.h"
 
-void	free_all(t_game *sl)
+void	free_all(t_game **sl)
 {
-	if (sl)
+	if ((*sl))
 	{
-		if (sl->imgs)
-			free_imgs(sl->imgs);
-		if (sl->mlx)
-			free(sl->mlx);
-		if (sl->mlx_win)
-			free(sl->mlx_win);
-		if (sl->path)
-			free_path(sl->path);
-		free(sl);
+		if ((*sl)->imgs)
+			free_imgs((*sl)->imgs);
+		if ((*sl)->path)
+			free_path((*sl)->path);
+		if ((*sl)->mlx)
+			free((*sl)->mlx);
+		free((*sl));
+		(*sl) = NULL;
 	}
 }
 
@@ -46,6 +45,8 @@ void	free_imgs(t_img *imgs)
 			ft_free(imgs->back);
 		if (imgs->exit)
 			ft_free(imgs->exit);
+		if (imgs->win)
+			ft_free(imgs->win);
 		free(imgs);
 	}
 }
@@ -62,10 +63,13 @@ void	free_path(t_path *path)
 	}
 }
 
-void	free_floodmap(t_path *path)
+void	free_line(char *line)
 {
-	if (path->flood_map)
-		ft_freearray(path->flood_map);
+	if (line)
+	{
+		free(line);
+		line = NULL;
+	}
 }
 
 int	ft_freearray(char **arr)

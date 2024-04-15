@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_validation.c                                  :+:      :+:    :+:   */
+/*   check_map_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:50 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:11:02 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:06:25 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/so_long.h"
+#include "../../inc/so_long.h"
 
 char	**fill_flood_map(t_path *path, char **flood_map, int x, int y)
 {
@@ -105,30 +105,26 @@ int	find_valid_path(t_path *path)
 	return (0);
 }
 
-t_path	*check_map_path(char *argv[])
+void	check_map_path(char *argv[], t_game **sl)
 {
 	int		map;
-	t_path	*path;
 
-	path = NULL;
-	path = init_path(path);
+	init_path((*sl));
 	map = open(argv[1], O_RDONLY);
 	if (map == -1)
-		map_path_errors(1, path);
-	line_count(path, map);
-	if (path->nl_count == -1)
-		map_path_errors(2, path);
+		map_path_errors(1, sl);
+	line_count((*sl)->path, map);
+	if ((*sl)->path->nl_count == -1)
+		map_path_errors(2, sl);
 	if (close(map) == -1)
-		map_path_errors(3, path);
+		map_path_errors(3, sl);
 	map = open(argv[1], O_RDONLY);
 	if (map == -1)
-		map_path_errors(1, path);
-	if (init_original_map(path, map) == -1)
-		map_path_errors(2, path);
+		map_path_errors(1, sl);
+	if (init_original_map((*sl)->path, map) == -1)
+		map_path_errors(2, sl);
 	if (close(map) == -1)
-		map_path_errors(3, path);
-	if (find_valid_path(path) == -1)
-		map_path_errors(4, path);
-	free_floodmap(path);
-	return (path);
+		map_path_errors(3, sl);
+	if (find_valid_path((*sl)->path) == -1)
+		map_path_errors(4, sl);
 }

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:23:32 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:10:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:42:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static int	check_first_or_last_line(char *line)
 	while (line[x] != '\n' && line[x] != '\0')
 	{
 		if (line[x] != '1')
-		{
-			free(line);
 			return (-1);
-		}
 		x++;
 	}
 	return (0);
@@ -38,23 +35,19 @@ static int	parse_line(t_count *counter, char *line, int map)
 		{
 			if (check_first_or_last_line(line) == -1)
 				return (finish_read(map, line));
-			break ;
 		}
 		if (check_invalid_chars(line) == -1)
 			return (finish_read(map, line));
 		if (check_walls(line) == -1)
-		{
-			free(line);
 			return (finish_read(map, line));
-		}
 		check_exit(line, counter);
 		check_position(line, counter);
 		check_collectibles(line, counter);
-		free(line);
+		free_line(line);
 		line = get_next_line(map);
 	}
 	if (line)
-		free(line);
+		free_line(line);
 	return (0);
 }
 
@@ -71,7 +64,7 @@ int	check_map_elements(int map, t_count *counter)
 	counter->count_c = 0;
 	if (check_first_or_last_line(line) == -1)
 		return (finish_read(map, line));
-	free(line);
+	free_line(line);
 	line = get_next_line(map);
 	if (parse_line(counter, line, map) == -1)
 		return (finish_read(map, line));

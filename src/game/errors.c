@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:38:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:08:30 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:30:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,8 @@
 void	init_window_errors(int error_code, t_game **sl)
 {
 	if (sl)
-	{
-		if (error_code == 1)
-			perror("Error\nMemory allocation failed");
-		if ((*sl)->path)
-			free_path((*sl)->path);
-		if ((*sl)->imgs)
-			free_imgs((*sl)->imgs);
-	}
+		free_all(sl);
+	if (error_code == 1)
+		perror("Error\nMemory allocation failed");
 	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:51:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:54:33 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:57:58 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define S_DOWN 115
 # define A_LEFT 97
 # define D_RIGHT 100
+# define KEY_CTRL 65507
+# define KEY_C 99
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "../minilibx-linux/mlx.h"
@@ -84,6 +86,8 @@ typedef struct s_game
 	int		p_y;
 	int		x;
 	int		y;
+	int		win_height;
+	int		win_width;
 	t_path	*path;
 	t_img	*imgs;
 }	t_game;
@@ -91,14 +95,14 @@ typedef struct s_game
 char	*ft_strdup(const char *s);
 
 // Free-functions
-void	free_all(t_game *sl);
+void	free_all(t_game **sl);
 int		ft_freearray(char **arr);
 void	free_imgs(t_img *imgs);
 void	free_path(t_path *path);
-void	free_floodmap(t_path *path);
+void	free_line(char *line);
 
 // Map validation -> Check file type, valid characters, size etc.
-void	check_map(char *argv[]);
+void	check_map(char *argv[], t_game **sl);
 int		finish_read(int map, char *line);
 int		check_file_type(char *map_filename);
 int		count_each_line(int map);
@@ -111,8 +115,8 @@ void	check_exit(char	*line, t_count *counter);
 
 // Map validation -> Check if there is a valid path to reach all collectibles
 // and also the exit.
-t_path	*check_map_path(char *argv[]);
-t_path	*init_path(t_path *path);
+void	check_map_path(char *argv[], t_game **sl);
+void	init_path(t_game *sl);
 int		init_original_map(t_path *path, int map);
 char	**map_copy(t_path *path);
 int		find_max_y(char **flood_map);
@@ -123,20 +127,20 @@ int		check_flood_map(char **flood_map, char **original_map);
 char	**fill_flood_map(t_path *path, char **flood_map, int x, int y);
 
 // Errors
-void	map_errors(int error_code, t_count *counter);
-void	map_path_errors(int error_code, t_path *path);
+void	map_errors(int error_code, t_count *counter, t_game **sl);
+void	map_path_errors(int error_code, t_game **sl);
 void	init_window_errors(int error_code, t_game **sl);
 
 // Game
 int		key_hook(int keycode, t_game *sl);
 void	init_images(t_game *sl);
 void	set_images(t_game *sl);
-void	init_struct(t_game *sl);
+void	init_struct(t_game **sl);
 void	init_map_in_window(t_game *sl, void *mlx, void *mlx_win);
 int		count_array_length(t_path *path);
 void	move_player(t_game *sl, int dir);
 void	find_player(t_game *sl);
 void	is_finished(t_game *sl);
-int		close_hook(void *param);
+int		close_hook(t_game *sl);
 
 #endif

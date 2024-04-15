@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validation.c                                   :+:      :+:    :+:   */
+/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:24 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:10:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:35:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/so_long.h"
+#include "../../inc/so_long.h"
 
 int	finish_read(int map, char *line)
 {
 	if (line)
-		free(line);
+		free_line(line);
 	line = get_next_line(map);
 	while (line)
 	{
-		free(line);
+		free_line(line);
 		line = get_next_line(map);
 	}
 	return (-1);
@@ -48,31 +48,31 @@ int	check_file_type(char *map_filename)
 	return (0);
 }
 
-void	check_map(char *argv[])
+void	check_map(char *argv[], t_game **sl)
 {
 	int		map;
 	t_count	*counter;
 
 	counter = malloc (sizeof(t_count));
 	if (!counter)
-		map_errors(5, counter);
+		map_errors(5, counter, sl);
 	map = open(argv[1], O_RDONLY);
 	if (map == -1)
-		map_errors(1, counter);
+		map_errors(1, counter, sl);
 	if (check_file_type(argv[1]) == -1)
-		map_errors(2, counter);
+		map_errors(2, counter, sl);
 	if (count_each_line(map) == -1)
 	{
 		close(map);
-		map_errors(3, counter);
+		map_errors(3, counter, sl);
 	}
 	if (close(map) == -1)
-		map_errors(4, counter);
+		map_errors(4, counter, sl);
 	map = open(argv[1], O_RDONLY);
 	if (map == -1)
-		map_errors(1, counter);
+		map_errors(1, counter, sl);
 	if (check_map_elements(map, counter) == -1)
-		map_errors(6, counter);
+		map_errors(3, counter, sl);
 	if (close(map) == -1)
-		map_errors(4, counter);
+		map_errors(4, counter, sl);
 }

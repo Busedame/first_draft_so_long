@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:58:48 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 19:00:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:15:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	find_exit(t_game *sl)
 
 	y = 0;
 	size = 65;
+	e_found = false;
 	while (sl->path->original_map[y])
 	{
 		x = 0;
@@ -38,6 +39,7 @@ void	find_exit(t_game *sl)
 		{
 			img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->exit, &size, &size);
 			mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, x * 65, y * 65);
+			mlx_destroy_image(sl->mlx, img);
 			return ;
 		}
 		y++;
@@ -71,21 +73,19 @@ int	check_finish_collectibles(t_game *sl)
 	return (1);
 }
 
-void	you_won_end_img(t_game *sl)
+void you_won_end_img(t_game *sl)
 {
 	void	*img;
 	int		size;
-	int		plc_x;
-	int		plc_y;
 
 	size = 130;
-	plc_x = ft_strlen(sl->path->original_map[0]);
-	plc_y = count_array_length(sl->path);
-	{
-		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, plc_x, plc_y);
-	}
+	sl->x = (sl->win_width - size) / 2;
+	sl->y = (sl->win_height - size) / 2;
+	img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->win, &size, &size);
+	mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->x, sl->y);
+	mlx_destroy_image(sl->mlx, img);
 }
+
 
 void	is_finished(t_game *sl)
 {
@@ -105,17 +105,13 @@ void	is_finished(t_game *sl)
 	{
 		you_won_end_img(sl);
 		ft_printf("You won!!\n");
-		mlx_destroy_display(sl->mlx);
-		mlx_destroy_window(sl->mlx, sl->mlx_win);
-		free_all(sl);
-		exit(0);
 	}
 }
 
-int close_hook(void *param)
+int close_hook(t_game *sl)
 {
-    void *mlx = param;
-
-    mlx_destroy_display(mlx);
-    exit(0);
+	mlx_destroy_window(sl->mlx, sl->mlx_win);
+	mlx_destroy_display(sl->mlx);
+	free_all(&sl);
+	exit(0);
 }

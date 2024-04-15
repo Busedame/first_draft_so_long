@@ -6,26 +6,25 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 18:41:49 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:10:59 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:18:08 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/so_long.h"
 
-t_path	*init_path(t_path *path)
+void	init_path(t_game *sl)
 {
-	path = malloc(sizeof(t_path));
-	if (!path)
-		map_path_errors(2, path);
-	path->original_map = NULL;
-	path->flood_map = NULL;
-	path->nl_count = 0;
-	path->player_found = false;
-	path->x = 0;
-	path->y = 0;
-	path->max_x = 0;
-	path->max_y = 0;
-	return (path);
+	sl->path = malloc(sizeof(t_path));
+	if (!sl->path)
+		map_path_errors(2, &sl);
+	sl->path->original_map = NULL;
+	sl->path->flood_map = NULL;
+	sl->path->nl_count = 0;
+	sl->path->player_found = false;
+	sl->path->x = 0;
+	sl->path->y = 0;
+	sl->path->max_x = 0;
+	sl->path->max_y = 0;
 }
 
 int	init_original_map(t_path *path, int map)
@@ -34,7 +33,7 @@ int	init_original_map(t_path *path, int map)
 	char	*line;
 
 	y = 0;
-	path->original_map = malloc(sizeof(char *) * (path->nl_count + 1));
+	path->original_map = malloc(sizeof(char *) * (path->nl_count + 2));
 	if (!path->original_map)
 		return (-1);
 	line = get_next_line(map);
@@ -43,7 +42,7 @@ int	init_original_map(t_path *path, int map)
 	path->original_map[y++] = ft_strdup(line);
 	while (1)
 	{
-		free(line);
+		free_line(line);
 		line = get_next_line(map);
 		path->original_map[y] = ft_strdup(line);
 		if (ft_strchr_index(line, '\n') == -1)
@@ -52,7 +51,7 @@ int	init_original_map(t_path *path, int map)
 			return (-1);
 	}
 	if (line)
-		free(line);
+		free_line(line);
 	path->original_map[++y] = NULL;
 	return (0);
 }
@@ -104,7 +103,7 @@ void	line_count(t_path *path, int map)
 	path->nl_count = 1;
 	while (line)
 	{
-		free(line);
+		free_line(line);
 		line = get_next_line(map);
 		if (line)
 			path->nl_count++;

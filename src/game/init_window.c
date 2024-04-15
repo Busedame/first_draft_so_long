@@ -6,25 +6,27 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:23:01 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 19:09:46 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:45:52 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/so_long.h"
 
-void	init_struct(t_game *sl)
+void	init_struct(t_game **sl)
 {
-	sl = NULL;
-	sl = malloc(sizeof(t_game));
-	if (!sl)
-		init_window_errors(1, &sl);
-	sl->imgs = NULL;
-	sl->mlx = NULL;
-	sl->mlx_win = NULL;
-	sl->p_x = 0;
-	sl->p_y = 0;
-	sl->x = 0;
-	sl->y = 0;
+	(*sl) = malloc(sizeof(t_game));
+	if (!(*sl))
+		init_window_errors(1, sl);
+	(*sl)->path = NULL;
+	(*sl)->imgs = NULL;
+	(*sl)->mlx = NULL;
+	(*sl)->mlx_win = NULL;
+	(*sl)->p_x = 0;
+	(*sl)->p_y = 0;
+	(*sl)->x = 0;
+	(*sl)->y = 0;
+	(*sl)->win_height = 0;
+	(*sl)->win_width = 0;
 }
 
 int	count_array_length(t_path *path)
@@ -60,26 +62,31 @@ void	init_map_in_window(t_game *sl, void *mlx, void *mlx_win)
 			{
 				img = mlx_xpm_file_to_image(mlx, sl->imgs->wall, &size, &size);
 				mlx_put_image_to_window(mlx, mlx_win, img, plc_x, plc_y);
+				mlx_destroy_image(mlx, img);
 			}
 			else if (sl->path->original_map[y][x] == 'P')
 			{
 				img = mlx_xpm_file_to_image(mlx, sl->imgs->me, &size, &size);
 				mlx_put_image_to_window(mlx, mlx_win, img, plc_x, plc_y);
+				mlx_destroy_image(mlx, img);
 			}
 			else if (sl->path->original_map[y][x] == 'C')
 			{
 				img = mlx_xpm_file_to_image(mlx, sl->imgs->food, &size, &size);
 				mlx_put_image_to_window(mlx, mlx_win, img, plc_x, plc_y);
+				mlx_destroy_image(mlx, img);
 			}
 			else if (sl->path->original_map[y][x] == 'E')
 			{
 				img = mlx_xpm_file_to_image(mlx, sl->imgs->bed, &size, &size);
 				mlx_put_image_to_window(mlx, mlx_win, img, plc_x, plc_y);
+				mlx_destroy_image(mlx, img);
 			}
 			else if (sl->path->original_map[y][x] != '\n')
 			{
 				img = mlx_xpm_file_to_image(mlx, sl->imgs->back, &size, &size);
 				mlx_put_image_to_window(mlx, mlx_win, img, plc_x, plc_y);
+				mlx_destroy_image(mlx, img);
 			}
 			x++;
 			plc_x += size;
@@ -94,6 +101,7 @@ void	find_player(t_game *sl)
 	bool	p_found;
 
 	sl->y = 0;
+	p_found = false;
 	while (sl->path->original_map[sl->y][0] != '\n' 
 		&& sl->path->original_map[sl->y])
 	{

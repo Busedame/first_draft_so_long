@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:24:50 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:08:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:40:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	move_right(t_game *sl)
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
 		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, rm_p, sl->p_y);
 	}
+	mlx_destroy_image(sl->mlx, img);
 }
 
 void	move_left(t_game *sl)
@@ -56,6 +57,7 @@ void	move_left(t_game *sl)
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
 		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, rm_p, sl->p_y);
 	}
+	mlx_destroy_image(sl->mlx, img);
 }
 
 void	move_down(t_game *sl)
@@ -79,6 +81,7 @@ void	move_down(t_game *sl)
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
 		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, rm_p);
 	}
+	mlx_destroy_image(sl->mlx, img);
 }
 
 void	move_up(t_game *sl)
@@ -102,6 +105,7 @@ void	move_up(t_game *sl)
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
 		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, rm_p);
 	}
+	mlx_destroy_image(sl->mlx, img);
 }
 
 void	move_player(t_game *sl, int dir)
@@ -121,4 +125,5 @@ void	move_player(t_game *sl, int dir)
 		move_right(sl);
 	img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->me, &size, &size);
 	mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, sl->p_y);
+	mlx_destroy_image(sl->mlx, img);
 }

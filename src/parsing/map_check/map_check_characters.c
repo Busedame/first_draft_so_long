@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:57:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:10:47 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:43:30 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	check_exit(char	*line, t_count *counter)
 	int	x;
 
 	x = 0;
-	while (line[x] != '\n')
+	while (line[x] != '\n' && line[x] != '\0')
 	{
 		if (line[x] == 'E')
 			counter->count_e++;
@@ -30,7 +30,7 @@ void	check_position(char	*line, t_count *counter)
 	int	x;
 
 	x = 0;
-	while (line[x] != '\n')
+	while (line[x] != '\n' && line[x] != '\0')
 	{
 		if (line[x] == 'P')
 			counter->count_p++;
@@ -43,7 +43,7 @@ void	check_collectibles(char	*line, t_count *counter)
 	int	x;
 
 	x = 0;
-	while (line[x] != '\n')
+	while (line[x] != '\n' && line[x] != '\0')
 	{
 		if (line[x] == 'C')
 			counter->count_c++;
@@ -77,7 +77,7 @@ int	check_invalid_chars(char *line)
 		if (line[x] != '1' && line[x] != '0' && line[x] != 'C' && line[x] != 'E'
 			&& line[x] != 'P')
 		{
-			free(line);
+			free_line(line);
 			return (-1);
 		}
 		x++;

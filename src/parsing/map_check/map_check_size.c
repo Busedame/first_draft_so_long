@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:26:14 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:10:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:18:35 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static char	*init_count_each_line(char *line, int map)
 		return (NULL);
 	if (line[0] == '\0')
 	{
-		free(line);
+		free_line(line);
 		return (NULL);
 	}
 	if (ft_strchr_index(line, '\n') == -1)
 	{
-		free(line);
+		free_line(line);
 		return (NULL);
 	}
 	return (line);
@@ -32,7 +32,7 @@ static char	*init_count_each_line(char *line, int map)
 
 static char	*line_iteration(char *line, int map)
 {
-	free(line);
+	free_line(line);
 	line = get_next_line(map);
 	if (!line)
 		return (NULL);
@@ -76,6 +76,6 @@ int	count_each_line(int map)
 	if (count != curr_count && line)
 		return (finish_read(map, line));
 	if (line)
-		free(line);
+		free_line(line);
 	return (0);
 }

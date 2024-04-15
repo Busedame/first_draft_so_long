@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:20:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/13 18:08:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:28:54 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	right_key(t_game *sl)
 	return (dir);
 }
 
-int left_key(t_game *sl)
+int	left_key(t_game *sl)
 {
 	int	dir;
 
@@ -77,6 +77,8 @@ int	key_hook(int keycode, t_game *sl)
 	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(sl->mlx, sl->mlx_win);
+		mlx_destroy_display(sl->mlx);
+		free_all(&sl);
 		exit(0);
 	}
 	else if (keycode == KEY_UP || keycode == W_UP)
