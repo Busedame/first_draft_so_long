@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:51:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/15 15:57:58 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:50:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # define S_DOWN 115
 # define A_LEFT 97
 # define D_RIGHT 100
-# define KEY_CTRL 65507
-# define KEY_C 99
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "../minilibx-linux/mlx.h"
@@ -35,16 +33,6 @@
 # include <stddef.h>
 # include <errno.h>
 # include <stdbool.h>
-
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
-
 
 typedef struct s_count
 {
@@ -82,17 +70,25 @@ typedef struct s_game
 {
 	void	*mlx;
 	void	*mlx_win;
+	int		plc_x;
+	int		plc_y;
 	int		p_x;
 	int		p_y;
 	int		x;
 	int		y;
 	int		win_height;
 	int		win_width;
+	bool	display_start;
+	bool	window_start;
+	bool	game_ended;
+	int		moves;
 	t_path	*path;
 	t_img	*imgs;
 }	t_game;
 
+// Standard-functions
 char	*ft_strdup(const char *s);
+int		count_array_length(t_path *path);
 
 // Free-functions
 void	free_all(t_game **sl);
@@ -102,6 +98,7 @@ void	free_path(t_path *path);
 void	free_line(char *line);
 
 // Map validation -> Check file type, valid characters, size etc.
+void	validate_map(char *argv[], t_game **sl);
 void	check_map(char *argv[], t_game **sl);
 int		finish_read(int map, char *line);
 int		check_file_type(char *map_filename);
@@ -113,8 +110,7 @@ void	check_collectibles(char	*line, t_count *counter);
 void	check_position(char	*line, t_count *counter);
 void	check_exit(char	*line, t_count *counter);
 
-// Map validation -> Check if there is a valid path to reach all collectibles
-// and also the exit.
+// Map validation -> Check if there is a valid path to reach collectibles+exit.
 void	check_map_path(char *argv[], t_game **sl);
 void	init_path(t_game *sl);
 int		init_original_map(t_path *path, int map);
@@ -126,21 +122,31 @@ void	set_player_start_coordinates(t_path *path);
 int		check_flood_map(char **flood_map, char **original_map);
 char	**fill_flood_map(t_path *path, char **flood_map, int x, int y);
 
+// Game initialization
+void	init_struct(t_game **sl);
+void	init_game(t_game **sl);
+void	init_images(t_game *sl);
+void	set_images(t_game *sl);
+void	init_map_in_window(t_game *sl, void *mlx, void *mlx_win);
+void	build_map_in_window(t_game *sl, void *mlx, void *mlx_win, int y);
+void	build_wall(t_game *sl, void *mlx, void *mlx_win, int size);
+void	build_player(t_game *sl, void *mlx, void *mlx_win, int size);
+void	build_collectible(t_game *sl, void *mlx, void *mlx_win, int size);
+void	build_exit(t_game *sl, void *mlx, void *mlx_win, int size);
+void	build_background(t_game *sl, void *mlx, void *mlx_win, int size);
+void	find_player(t_game *sl);
+
+// Running the game
+void	run_game(t_game **sl);
+int		key_hook(int keycode, t_game *sl);
+void	move_player(t_game *sl, int dir);
+void	is_finished(t_game *sl);
+int		close_hook_cross(t_game *sl);
+
 // Errors
 void	map_errors(int error_code, t_count *counter, t_game **sl);
 void	map_path_errors(int error_code, t_game **sl);
-void	init_window_errors(int error_code, t_game **sl);
-
-// Game
-int		key_hook(int keycode, t_game *sl);
-void	init_images(t_game *sl);
-void	set_images(t_game *sl);
-void	init_struct(t_game **sl);
-void	init_map_in_window(t_game *sl, void *mlx, void *mlx_win);
-int		count_array_length(t_path *path);
-void	move_player(t_game *sl, int dir);
-void	find_player(t_game *sl);
-void	is_finished(t_game *sl);
-int		close_hook(t_game *sl);
+void	game_errors(int error_code, t_game **sl);
+void	image_error(void *img, t_game **sl);
 
 #endif

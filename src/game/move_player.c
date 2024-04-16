@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:24:50 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/15 14:40:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:35:47 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,22 @@ void	move_right(t_game *sl)
 
 	size = 65;
 	old_x = sl->x - 1;
+	img = NULL;
+	rm_p = 0;
 	if (sl->path->original_map[sl->y][old_x] == 'E')
 	{
 		rm_p = sl->p_x - 65;
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->bed, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, rm_p, sl->p_y);
 	}
 	else if (sl->path->original_map[sl->y][old_x] != '1')
 	{
 		rm_p = sl->p_x - 65;
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, rm_p, sl->p_y);
 	}
+	if (!img)
+		game_errors(3, &sl);
+	if (mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, rm_p, sl->p_y) == -1)
+		image_error(img, &sl);
 	mlx_destroy_image(sl->mlx, img);
 }
 
@@ -45,18 +49,22 @@ void	move_left(t_game *sl)
 
 	size = 65;
 	old_x = sl->x + 1;
+	img = NULL;
+	rm_p = 0;
 	if (sl->path->original_map[sl->y][old_x] == 'E')
 	{
 		rm_p = sl->p_x + 65;
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->bed, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, rm_p, sl->p_y);
 	}
 	else if (sl->path->original_map[sl->y][old_x] != '1')
 	{
 		rm_p = sl->p_x + 65;
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, rm_p, sl->p_y);
 	}
+	if (!img)
+		game_errors(3, &sl);
+	if (mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, rm_p, sl->p_y) == -1)
+		image_error(img, &sl);
 	mlx_destroy_image(sl->mlx, img);
 }
 
@@ -69,18 +77,22 @@ void	move_down(t_game *sl)
 
 	size = 65;
 	old_y = sl->y - 1;
+	img = NULL;
+	rm_p = 0;
 	if (sl->path->original_map[old_y][sl->x] == 'E')
 	{
 		rm_p = sl->p_y - 65;
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->bed, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, rm_p);
 	}
 	else if (sl->path->original_map[old_y][sl->x] != '1')
 	{
 		rm_p = sl->p_y - 65;
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, rm_p);
 	}
+	if (!img)
+		game_errors(3, &sl);
+	if (mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, rm_p) == -1)
+		image_error(img, &sl);
 	mlx_destroy_image(sl->mlx, img);
 }
 
@@ -93,18 +105,22 @@ void	move_up(t_game *sl)
 
 	size = 65;
 	old_y = sl->y + 1;
+	img = NULL;
+	rm_p = 0;
 	if (sl->path->original_map[old_y][sl->x] == 'E')
 	{
 		rm_p = sl->p_y + 65;
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->bed, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, rm_p);
 	}
 	else if (sl->path->original_map[old_y][sl->x] != '1')
 	{
 		rm_p = sl->p_y + 65;
 		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->back, &size, &size);
-		mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, rm_p);
 	}
+	if (!img)
+		game_errors(3, &sl);
+	if (mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, rm_p) == -1)
+		image_error(img, &sl);
 	mlx_destroy_image(sl->mlx, img);
 }
 
@@ -112,8 +128,8 @@ void	move_player(t_game *sl, int dir)
 {
 	void	*img;
 	int		size;
-	int		rm_p;
 
+	img = NULL;
 	size = 65;
 	if (dir == 1)
 		move_up(sl);
@@ -123,7 +139,15 @@ void	move_player(t_game *sl, int dir)
 		move_left(sl);
 	if (dir == 4)
 		move_right(sl);
-	img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->me, &size, &size);
-	mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, sl->p_x, sl->p_y);
-	mlx_destroy_image(sl->mlx, img);
+	if (dir >= 1 && dir <= 4)
+	{
+		img = mlx_xpm_file_to_image(sl->mlx, sl->imgs->me, &size, &size);
+		if (!img)
+			game_errors(3, &sl);
+		if (mlx_put_image_to_window(sl->mlx, sl->mlx_win, img, \
+		sl->p_x, sl->p_y) == -1)
+			image_error(img, &sl);
+		mlx_destroy_image(sl->mlx, img);
+		ft_printf("Number of movements: %d\n", ++sl->moves);
+	}
 }

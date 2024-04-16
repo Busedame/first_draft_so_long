@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:20:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/15 16:28:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:56:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,28 +71,24 @@ int	up_key(t_game *sl)
 int	key_hook(int keycode, t_game *sl)
 {
 	int			dir;
-	static int	moves;
 
 	dir = 0;
 	if (keycode == KEY_ESC)
 	{
-		mlx_destroy_window(sl->mlx, sl->mlx_win);
-		mlx_destroy_display(sl->mlx);
 		free_all(&sl);
 		exit(0);
 	}
-	else if (keycode == KEY_UP || keycode == W_UP)
+	else if ((keycode == KEY_UP || keycode == W_UP) && !sl->game_ended)
 		dir = up_key(sl);
-	else if (keycode == KEY_DOWN || keycode == S_DOWN)
+	else if ((keycode == KEY_DOWN || keycode == S_DOWN) && !sl->game_ended)
 		dir = down_key(sl);
-	else if (keycode == KEY_LEFT || keycode == A_LEFT)
+	else if ((keycode == KEY_LEFT || keycode == A_LEFT) && !sl->game_ended)
 		dir = left_key(sl);
-	else if (keycode == KEY_RIGHT || keycode == D_RIGHT)
+	else if ((keycode == KEY_RIGHT || keycode == D_RIGHT) && !sl->game_ended)
 		dir = right_key(sl);
 	else
 		return (1);
 	move_player(sl, dir);
-	ft_printf("Number of movements: %d\n", ++moves);
 	is_finished(sl);
 	return (0);
 }

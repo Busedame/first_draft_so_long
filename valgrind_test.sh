@@ -40,11 +40,13 @@ sleep 2s
 # valgrind ./so_long tests/invalid/map-not-rectangular-2.ber
 # valgrind ./so_long tests/invalid/map-not-rectangular-3.ber
 # valgrind ./so_long tests/invalid/map-not-rectangular-4.ber
+# valgrind ./so_long tests/valid/map_small.ber
 # valgrind ./so_long tests/valid/map-square.ber
 # valgrind ./so_long tests/valid/map1.ber
 # valgrind ./so_long tests/valid/map2.ber
 # valgrind ./so_long tests/valid/map3.ber
 # valgrind ./so_long tests/valid/map4.ber
+# valgrind ./so_long tests/valid/map5.ber
 
 valgrind_commands=(
     "./so_long \"tests/invalid/map-empty-line1.ber\""
@@ -84,11 +86,13 @@ valgrind_commands=(
     "./so_long tests/invalid/map-not-rectangular-2.ber"
     "./so_long tests/invalid/map-not-rectangular-3.ber"
     "./so_long tests/invalid/map-not-rectangular-4.ber"
+    "./so_long tests/valid/map_small.ber"
 	"./so_long tests/valid/map-square.ber"
 	"./so_long tests/valid/map1.ber"
 	"./so_long tests/valid/map2.ber"
 	"./so_long tests/valid/map3.ber"
 	"./so_long tests/valid/map4.ber"
+    "./so_long tests/valid/map5.ber"
 )
 
 RED='\033[0;31m'

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:28:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/15 15:37:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:39:32 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	free_all(t_game **sl)
 {
+	if ((*sl)->window_start)
+		mlx_destroy_window((*sl)->mlx, (*sl)->mlx_win);
+	if ((*sl)->display_start)
+		mlx_destroy_display((*sl)->mlx);
 	if ((*sl))
 	{
 		if ((*sl)->imgs)

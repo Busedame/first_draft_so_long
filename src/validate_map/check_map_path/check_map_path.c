@@ -6,11 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:25:50 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/15 13:06:25 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:14:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/so_long.h"
+#include "../../../inc/so_long.h"
 
 char	**fill_flood_map(t_path *path, char **flood_map, int x, int y)
 {
