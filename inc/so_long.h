@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:51:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/16 18:50:50 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:27:46 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	free_line(char *line);
 // Map validation -> Check file type, valid characters, size etc.
 void	validate_map(char *argv[], t_game **sl);
 void	check_map(char *argv[], t_game **sl);
-int		finish_read(int map, char *line);
+int		finish_read(int map, char **line);
 int		check_file_type(char *map_filename);
 int		count_each_line(int map);
 int		check_map_elements(int map, t_count *counter);

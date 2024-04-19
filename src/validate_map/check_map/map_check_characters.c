@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:57:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/16 17:32:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:10:02 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	check_exit(char	*line, t_count *counter)
 	int	x;
 
 	x = 0;
-	while (line[x] != '\n' && line[x] != '\0')
+	while (line[x] != '\n' && line[x] != '\r' && line[x] != '\0')
 	{
 		if (line[x] == 'E')
 			counter->count_e++;
@@ -30,7 +30,7 @@ void	check_position(char	*line, t_count *counter)
 	int	x;
 
 	x = 0;
-	while (line[x] != '\n' && line[x] != '\0')
+	while (line[x] != '\n' && line[x] != '\r' && line[x] != '\0')
 	{
 		if (line[x] == 'P')
 			counter->count_p++;
@@ -43,7 +43,7 @@ void	check_collectibles(char	*line, t_count *counter)
 	int	x;
 
 	x = 0;
-	while (line[x] != '\n' && line[x] != '\0')
+	while (line[x] != '\n' && line[x] != '\r' && line[x] != '\0')
 	{
 		if (line[x] == 'C')
 			counter->count_c++;
@@ -58,7 +58,9 @@ int	check_walls(char *line)
 
 	start = 0;
 	end = ft_strlen(line) - 2;
-	if (end < 0 && line[0] == '\n')
+	if (ft_strchr_index(line, '\r') != -1)
+		end = ft_strlen(line) - 3;
+	if (end < 0)
 		return (0);
 	if (line[start] != '1')
 		return (-1);
@@ -72,14 +74,11 @@ int	check_invalid_chars(char *line)
 	int	x;
 
 	x = 0;
-	while (line[x] != '\n' && line[x] != '\0')
+	while (line[x] != '\n' && line[x] != '\r' && line[x] != '\0')
 	{
 		if (line[x] != '1' && line[x] != '0' && line[x] != 'C' && line[x] != 'E'
 			&& line[x] != 'P')
-		{
-			free_line(line);
 			return (-1);
-		}
 		x++;
 	}
 	return (0);

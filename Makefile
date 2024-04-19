@@ -5,13 +5,13 @@
 #                                                     +:+ +:+         +:+      #
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/21 14:08:18 by nholbroo          #+#    #+#              #
-#    Updated: 2024/04/16 19:03:51 by nholbroo         ###   ########.fr        #
+#    Created: 2024/04/18 15:50:24 by nholbroo          #+#    #+#              #
+#    Updated: 2024/04/19 13:30:50 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=cc
-CFLAGS=-Wall -Wextra -Werror
+CFLAGS=-g -Wall -Wextra -Werror
 SRC=src/ft_printf/ft_printf.c \
 src/ft_printf/ft_putchar.c \
 src/ft_printf/ft_puthexa_lower.c \
@@ -56,7 +56,14 @@ MLX_DIR= minilibx-linux
 MLX_INC= $(MLX_DIR)
 MLX_LIB= -L$(MLX_DIR) -lmlx -lX11 -lXext -lm
 
-all: $(NAME)
+all: mlx $(NAME)
+
+# Cloning minilibx repository if the directory doesn't exist and making minilibx
+mlx:
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); \
+	fi
+	@make -C $(MLX_DIR)
 
 # Compiling the object files, including minilibx and making an executable.
 $(NAME): build $(OBJ)
@@ -79,10 +86,15 @@ build/%.o: src/%.c
 clean:
 	@rm -f build/*.o
 	@rm -f build/*/*.o
-	@echo "\e[1;32mAll object files removed\e[0m"
+	@echo "\e[1;32mAll my object files removed\e[0m"
+
+# Cleans up the minilibx directory
+clean_mlx:
+	@rm -rf $(MLX_DIR)
+	@echo "\e[1;32mMinilibx directory removed\e[0m"
 
 # Cleans up all object files and the build-directory, and removes the executable.
-fclean: clean
+fclean: clean clean_mlx
 	@rm -rf build
 	@rm -f $(NAME)
 	@echo "\e[1;32mBuild directory and executable removed\e[0m"
@@ -90,4 +102,4 @@ fclean: clean
 # Cleans up everything and compiles everything again.
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re mlx

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:26:14 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/15 13:18:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:31:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,27 @@ static int	check_curr_count(char *line)
 	curr_count = 0;
 	if (ft_strchr_index(line, '\n') == -1)
 		curr_count = ft_strlen(line);
-	else
+	else if (ft_strchr_index(line, '\n') != -1 
+		&& ft_strchr_index(line, '\r') != -1)
+		curr_count = ft_strlen(line) - 2;
+	else if (ft_strchr_index(line, '\n') != -1)
 		curr_count = ft_strlen(line) - 1;
 	return (curr_count);
+}
+
+int	check_count(char *line)
+{
+	int	count;
+
+	count = 0;
+	if (ft_strchr_index(line, '\n') == -1)
+		count = ft_strlen(line);
+	else if (ft_strchr_index(line, '\n') != -1 
+		&& ft_strchr_index(line, '\r') != -1)
+		count = ft_strlen(line) - 2;
+	else if (ft_strchr_index(line, '\n') != -1)
+		count = ft_strlen(line) - 1;
+	return (count);
 }
 
 int	count_each_line(int map)
@@ -61,20 +79,19 @@ int	count_each_line(int map)
 	line = init_count_each_line(line, map);
 	if (!line)
 		return (-1);
-	count = ft_strlen(line) - 1;
+	count = check_count(line);
+	curr_count = 0;
 	while (1)
 	{
-		curr_count = 0;
 		line = line_iteration(line, map);
 		if (!line)
 			break ;
 		curr_count = check_curr_count(line);
-		if ((curr_count != count && line[0] != '\n') 
-			|| (ft_strchr_index(line, '\n') == -1))
+		if (curr_count != count || (ft_strchr_index(line, '\n') == -1))
 			break ;
 	}
-	if (count != curr_count && line)
-		return (finish_read(map, line));
+	if (count != curr_count)
+		return (finish_read(map, &line));
 	if (line)
 		free_line(line);
 	return (0);

@@ -6,21 +6,23 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 18:27:24 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/04/16 17:14:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:57:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/so_long.h"
 
-int	finish_read(int map, char *line)
+int	finish_read(int map, char **line)
 {
-	if (line)
-		free_line(line);
-	line = get_next_line(map);
-	while (line)
+	char	*currline;
+
+	if (*line)
+		free_line(*line);
+	currline = get_next_line(map);
+	while (currline)
 	{
-		free_line(line);
-		line = get_next_line(map);
+		free_line(currline);
+		currline = get_next_line(map);
 	}
 	return (-1);
 }
